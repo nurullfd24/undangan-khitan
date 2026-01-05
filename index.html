@@ -1,216 +1,199 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Undangan Khitan Achmad Ismail</title>
-  <style>
-    * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-    body {
-      margin: 0; min-height: 100vh;
-      background: linear-gradient(180deg,#8b0000,#b22222);
-      display: flex; justify-content: center; align-items: center; color: #fff;
-      overflow: hidden;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Undangan Khitan</title>
+<style>
+* { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+body {
+  margin: 0; min-height: 100vh;
+  background: linear-gradient(180deg,#8b0000,#b22222);
+  color: #fff;
+  overflow: hidden;
+}
 
-    .card {
-      max-width: 420px; width: 100%;
-      background: rgba(255,255,255,0.12);
-      backdrop-filter: blur(6px);
-      border-radius: 20px; padding: 24px; text-align: center;
-      display: none; 
-      animation: fadeInCard 0.8s ease forwards;
-    }
+/* ===== CARD UTAMA (SCROLLABLE) ===== */
+.card {
+  max-width: 420px; width: 100%;
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(6px);
+  border-radius: 20px; padding: 24px; text-align: center;
+  display: none;
+  max-height: 95vh;        /* tinggi maksimal kartu */
+  overflow-y: auto;        /* scroll vertical */
+  -webkit-overflow-scrolling: touch; /* smooth scroll di iOS */
+}
 
-    @keyframes fadeInCard{
-      from{opacity:0; transform:translateY(30px);}
-      to{opacity:1; transform:translateY(0);}
-    }
+h1{font-size:26px;margin:8px 0} 
+h2{font-size:20px;margin:8px 0} 
+.guest{margin:10px 0;font-size:16px}
 
-    h1{font-size:26px;margin:8px 0} 
-    h2{font-size:20px;margin:8px 0}
-    .guest{margin:10px 0;font-size:16px}
+/* Slider 3:4 */
+.slider{position:relative;width:100%;padding-top:133.33%; overflow:hidden;border-radius:16px;margin:16px 0}
+.slide{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;transform: translateX(100%);transition: transform .6s ease;}
+.slide.active{ transform: translateX(0); }
+.slide.prev{ transform: translateX(-100%); }
+.slide.active{opacity:1}
 
-    /* Slider 3:4 */
-    .slider{position:relative;width:100%;padding-top:133.33%; overflow:hidden;border-radius:16px;margin:16px 0}
-    .slide{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;transform: translateX(100%);transition: transform .6s ease;}
-    .slide.active{ transform: translateX(0); }
-    .slide.prev{ transform: translateX(-100%); }
-    .slide.active{opacity:1}
+.section{margin-top:22px}
+.section h3{margin-bottom:8px;font-size:18px;border-bottom:1px solid rgba(255,255,255,.3);padding-bottom:6px}
+.btn{width:100%;padding:12px;border-radius:12px;border:none;margin-top:8px;font-size:15px}
+.btn-green{background:#2ecc71;color:#fff}
+.btn-red{background:#e74c3c;color:#fff}
+.btn-gold{background:#f1c40f;color:#000}
+footer{margin-top:24px;font-size:12px;opacity:.85}
 
-    .section{margin-top:22px}
-    .section h3{margin-bottom:8px;font-size:18px;border-bottom:1px solid rgba(255,255,255,.3);padding-bottom:6px}
-    .btn{width:100%;padding:12px;border-radius:12px;border:none;margin-top:8px;font-size:15px}
-    .btn-green{background:#2ecc71;color:#fff}
-    .btn-red{background:#e74c3c;color:#fff}
-    .btn-gold{background:#f1c40f;color:#000}
-    footer{margin-top:24px;font-size:12px;opacity:.85}
+.dots{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:6px}
+.dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.4)}
+.dot.active{background:#fff}
 
-    .dots{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:6px}
-    .dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.4)}
-    .dot.active{background:#fff}
-
-    /* POP-UP */
-    #popup {
-      position: fixed; top:0; left:0; width:100%; height:100%;
-      background: rgba(0,0,0,0.7);
-      display:flex; justify-content:center; align-items:center;
-      z-index:1000;
-      opacity:0;
-      animation: fadeIn 0.6s forwards;
-    }
-    @keyframes fadeIn { to{opacity:1;} }
-
-    #popupContent {
-      background:#fff; color:#000; padding:20px; border-radius:16px; text-align:center; max-width:320px;
-    }
-    #popupContent button {
-      margin-top:12px; padding:10px 16px; border:none; border-radius:10px;
-      background:#b22222; color:#fff; font-size:16px; cursor:pointer;
-    }
-  </style>
+/* POP-UP */
+#popup {
+  position: fixed; top:0; left:0; width:100%; height:100%;
+  background: rgba(0,0,0,0.7);
+  display:flex; justify-content:center; align-items:center;
+  z-index:1000;
+}
+#popupContent {
+  background:#fff; color:#000; padding:20px; border-radius:16px; text-align:center; max-width:320px;
+}
+#popupContent button {margin-top:12px; padding:10px 16px; border:none; border-radius:10px; background:#b22222; color:#fff; font-size:16px; cursor:pointer;}
+</style>
 </head>
 <body>
 
-  <!-- POP-UP NAMA TAMU -->
-  <div id="popup">
-    <div id="popupContent">
-      <p>Kepada Yth:</p>
-      <h2 id="popupGuestName">Tamu Undangan</h2>
-      <button onclick="enterInvitation()">Buka Undangan</button>
-    </div>
+<!-- POP-UP NAMA TAMU -->
+<div id="popup">
+  <div id="popupContent">
+    <p>Kepada Yth:</p>
+    <h2 id="popupGuestName">Tamu Undangan</h2>
+    <button onclick="enterInvitation()">Buka Undangan</button>
+  </div>
+</div>
+
+<div class="card" id="invitationCard">
+  <div class="guest">
+    <strong id="guestName">Tamu Undangan</strong>
+  </div>
+  <h2>Undangan Khitan</h2>
+  <h1>Achmad Ismail</h1>
+
+  <!-- SLIDER FOTO 3:4 -->
+  <div class="slider" id="slider">
+    <img src="khitan/foto1.jpg" class="slide active">
+    <img src="khitan/foto2.jpg" class="slide">
+    <img src="khitan/foto3.jpg" class="slide">
+    <img src="khitan/foto4.jpg" class="slide">
+    <div class="dots" id="dots"></div>
   </div>
 
-  <!-- CARD UNDANGAN -->
-  <div class="card" id="invitationCard">
-    <h2>Undangan Khitan</h2>
-    <h1>Achmad Ismail</h1>
-
-    <!-- SLIDER FOTO -->
-    <div class="slider" id="slider">
-      <img src="khitan/foto1.jpg" class="slide active">
-      <img src="khitan/foto2.jpg" class="slide">
-      <img src="khitan/foto3.jpg" class="slide">
-      <img src="khitan/foto4.jpg" class="slide">
-      <div class="dots" id="dots"></div>
-    </div>
-
-    <!-- DETAIL ACARA -->
-    <div class="section">
-      <h3>📅 Detail Acara</h3>
-      <p>Minggu, 25 Januari 2026<br>Pukul 09.00 WIB<br>Jakarta Utara</p>
-      <p id="countdown">⏳ Menghitung waktu...</p>
-      <a href="https://goo.gl/maps/..." target="_blank" style="text-decoration:none">
-        <button class="btn btn-gold">📍 Buka Google Maps</button>
-      </a>
-    </div>
-
-    <!-- DOA KHITAN -->
-    <div class="section">
-      <h3>🤲 Doa Khitan</h3>
-      <p style="font-size:14px;line-height:1.6">Ya Allah, jadikanlah anak kami anak yang sholeh, sehat, dan berbakti. Aamiin.</p>
-    </div>
-
-    <!-- KONFIRMASI HADIR -->
-    <div class="section">
-      <h3>✅ Konfirmasi Kehadiran</h3>
-      <button class="btn btn-green">Hadir</button>
-      <button class="btn btn-red">Tidak Hadir</button>
-    </div>
-
-    <!-- KIRIM KADO -->
-    <div class="section">
-      <h3>🎁 Kirim Kado</h3>
-      <p style="font-size:14px">📦 Alamat Rumah<br>💳 DANA 08xxxx a.n. Orang Tua</p>
-    </div>
-
-    <!-- BACKSOUND -->
-    <div class="section">
-      <h3>🔊 Backsound</h3>
-      <button class="btn" id="musicBtn" onclick="toggleMusic()">▶ Play Musik</button>
-    </div>
-
-    <footer>Terima kasih atas doa & kehadirannya 🤍</footer>
+  <div class="section">
+    <h3>📅 Detail Acara</h3>
+    <p>Minggu, 25 Januari 2026<br>Pukul 09.00 WIB<br>Jakarta Utara</p>
+    <p id="countdown">⏳ Menghitung waktu...</p>
+    <a href="https://www.google.com/maps/place/Kost+Danis/@-6.1280686,106.8743555,47m" target="_blank">
+      <button class="btn btn-gold">📍 Buka Google Maps</button>
+    </a>
   </div>
+
+  <div class="section">
+    <h3>🤲 Doa Khitan</h3>
+    <p style="font-size:14px;line-height:1.6">Ya Allah, jadikanlah anak kami anak yang sholeh, sehat, dan berbakti. Aamiin.</p>
+  </div>
+
+  <div class="section">
+    <h3>✅ Konfirmasi Kehadiran</h3>
+    <button class="btn btn-green">Hadir</button>
+    <button class="btn btn-red">Tidak Hadir</button>
+  </div>
+
+  <div class="section">
+    <h3>🎁 Kirim Kado</h3>
+    <p style="font-size:14px">📦 Alamat Rumah<br>💳 DANA 08xxxx a.n. Orang Tua</p>
+  </div>
+
+  <div class="section">
+    <h3>🔊 Backsound</h3>
+    <button class="btn" id="musicBtn" onclick="toggleMusic()">▶ Play Musik</button>
+  </div>
+
+  <footer>Terima kasih atas doa & kehadirannya 🤍</footer>
+</div>
 
 <audio id="music" loop>
   <source src="backsound.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-  // ===== NAMA TAMU OTOMATIS =====
-  const params = new URLSearchParams(window.location.search);
-  const guest = params.get('to');
-  const guestName = guest ? guest.replace(/\+/g,' ') : 'Tamu Undangan';
-  document.getElementById('popupGuestName').innerText = guestName;
+/* ===== NAMA TAMU OTOMATIS ===== */
+const params = new URLSearchParams(window.location.search);
+const guest = params.get('to');
+const guestName = guest ? guest.replace(/\+/g,' ') : 'Tamu Undangan';
+document.getElementById('popupGuestName').innerText = guestName;
+document.getElementById('guestName').innerText = guestName;
 
-  // ===== POP-UP MASUK & FADE =====
-  function enterInvitation(){
-    const popup = document.getElementById('popup');
-    const card = document.getElementById('invitationCard');
-    popup.style.opacity = 0;
-    setTimeout(()=>{
-      popup.style.display='none';
-      card.style.display='block';
-    },500);
-  }
+function enterInvitation(){
+  document.getElementById('popup').style.display = 'none';
+  document.getElementById('invitationCard').style.display = 'block';
+}
 
-  // ===== SLIDER FOTO + SWIPE + DOT =====
-  let index = 0;
-  const slides = document.querySelectorAll('.slide');
-  const dotsContainer = document.getElementById('dots');
-  const slider = document.getElementById('slider');
+/* ===== SLIDER FOTO + SWIPE ===== */
+let index = 0;
+const slides = document.querySelectorAll('.slide');
+const dotsContainer = document.getElementById('dots');
+const slider = document.getElementById('slider');
 
-  slides.forEach((_,i)=>{
-    const d = document.createElement('div');
-    d.className = 'dot' + (i===0?' active':'');
-    dotsContainer.appendChild(d);
+slides.forEach((_,i)=>{
+  const d = document.createElement('div');
+  d.className = 'dot' + (i===0?' active':'');
+  dotsContainer.appendChild(d);
+});
+const dots = document.querySelectorAll('.dot');
+
+function showSlide(i){
+  slides.forEach((s,idx)=>{
+    s.classList.remove('active','prev');
+    if(idx === i) s.classList.add('active');
+    else if(idx === i-1) s.classList.add('prev');
   });
-  const dots = document.querySelectorAll('.dot');
+  dots.forEach(d=>d.classList.remove('active'));
+  dots[i].classList.add('active');
+  index = i;
+}
+function next(){ showSlide((index+1)%slides.length); }
+function prev(){ showSlide((index-1+slides.length)%slides.length); }
 
-  function showSlide(i){
-    slides.forEach((s,idx)=>{
-      s.classList.remove('active','prev');
-      if(idx === i) s.classList.add('active');
-      else if(idx === i-1) s.classList.add('prev');
-    });
-    dots.forEach(d=>d.classList.remove('active'));
-    dots[i].classList.add('active');
-    index = i;
-  }
+let startX = 0;
+slider.addEventListener('touchstart',e=>{ startX = e.touches[0].clientX; });
+slider.addEventListener('touchend',e=>{
+  const endX = e.changedTouches[0].clientX;
+  if(startX - endX > 50) next();
+  if(endX - startX > 50) prev();
+});
 
-  function next(){ showSlide((index+1)%slides.length); }
-  function prev(){ showSlide((index-1+slides.length)%slides.length); }
+setInterval(next,4000);
 
-  let startX = 0;
-  slider.addEventListener('touchstart',e=>{ startX = e.touches[0].clientX; });
-  slider.addEventListener('touchend',e=>{
-    const endX = e.changedTouches[0].clientX;
-    if(startX - endX > 50) next();
-    if(endX - startX > 50) prev();
-  });
-  setInterval(next,4000);
+/* ===== MUSIC ===== */
+const music = document.getElementById('music');
+const btn = document.getElementById('musicBtn');
+function toggleMusic(){
+  if(music.paused){ music.play(); btn.innerText='⏸ Pause Musik'; }
+  else { music.pause(); btn.innerText='▶ Play Musik'; }
+}
 
-  // ===== MUSIC =====
-  const music = document.getElementById('music');
-  const btn = document.getElementById('musicBtn');
-  function toggleMusic(){
-    if(music.paused){ music.play(); btn.innerText='⏸ Pause Musik'; }
-    else { music.pause(); btn.innerText='▶ Play Musik'; }
-  }
-
-  // ===== COUNTDOWN =====
-  const eventDate = new Date('2026-01-25T09:00:00').getTime();
-  const cd = document.getElementById('countdown');
-  setInterval(() => {
-    const now = new Date().getTime();
-    const diff = eventDate - now;
-    if(diff <= 0){ cd.innerHTML = '🎉 Acara sedang berlangsung'; return; }
-    const d = Math.floor(diff / (1000*60*60*24));
-    const h = Math.floor((diff / (1000*60*60)) % 24);
-    const m = Math.floor((diff / (1000*60)) % 60);
-    cd.innerHTML = `⏳ ${d} hari ${h} jam ${m} menit`;
-  }, 1000);
+/* ===== COUNTDOWN ===== */
+const eventDate = new Date('2026-01-25T09:00:00').getTime();
+const cd = document.getElementById('countdown');
+setInterval(() => {
+  const now = new Date().getTime();
+  const diff = eventDate - now;
+  if(diff <= 0){ cd.innerHTML = '🎉 Acara sedang berlangsung'; return; }
+  const d = Math.floor(diff / (1000*60*60*24));
+  const h = Math.floor((diff / (1000*60*60)) % 24);
+  const m = Math.floor((diff / (1000*60)) % 60);
+  cd.innerHTML = `⏳ ${d} hari ${h} jam ${m} menit`;
+}, 1000);
 </script>
 </body>
 </html>
