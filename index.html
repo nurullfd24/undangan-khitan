@@ -13,16 +13,16 @@ body {
   overflow: hidden;
 }
 
-/* ===== CARD UTAMA (SCROLLABLE) ===== */
+/* CARD UTAMA (SCROLLABLE) */
 .card {
   max-width: 420px; width: 100%;
   background: rgba(255,255,255,0.12);
   backdrop-filter: blur(6px);
   border-radius: 20px; padding: 24px; text-align: center;
   display: none;
-  max-height: 95vh;        /* tinggi maksimal kartu */
-  overflow-y: auto;        /* scroll vertical */
-  -webkit-overflow-scrolling: touch; /* smooth scroll di iOS */
+  max-height: 95vh; 
+  overflow-y: auto; 
+  -webkit-overflow-scrolling: touch;
 }
 
 h1{font-size:26px;margin:8px 0} 
@@ -58,7 +58,10 @@ footer{margin-top:24px;font-size:12px;opacity:.85}
 #popupContent {
   background:#fff; color:#000; padding:20px; border-radius:16px; text-align:center; max-width:320px;
 }
-#popupContent button {margin-top:12px; padding:10px 16px; border:none; border-radius:10px; background:#b22222; color:#fff; font-size:16px; cursor:pointer;}
+#popupContent button {
+  margin-top:12px; padding:10px 16px; border:none; border-radius:10px;
+  background:#b22222; color:#fff; font-size:16px; cursor:pointer;
+}
 </style>
 </head>
 <body>
@@ -73,9 +76,7 @@ footer{margin-top:24px;font-size:12px;opacity:.85}
 </div>
 
 <div class="card" id="invitationCard">
-  <div class="guest">
-    <strong id="guestName">Tamu Undangan</strong>
-  </div>
+  <div class="guest"><strong id="guestName">Tamu Undangan</strong></div>
   <h2>Undangan Khitan</h2>
   <h1>Achmad Ismail</h1>
 
@@ -84,14 +85,16 @@ footer{margin-top:24px;font-size:12px;opacity:.85}
     <img src="khitan/foto1.jpg" class="slide active">
     <img src="khitan/foto2.jpg" class="slide">
     <img src="khitan/foto3.jpg" class="slide">
+    <img src="khitan/foto4.jpg" class="slide">
     <img src="khitan/foto5.jpg" class="slide">
     <div class="dots" id="dots"></div>
-
   </div>
 
   <div class="section">
     <h3>Assalamu’alaikum warahmatullahi wabarakatuh</h3>
-<p Sryle="font-size:14px;line-height:1.6">Dengan memohon rahmat dan ridho Allah SWT, kami mengundang Bapak/Ibu/Saudara/i untuk hadir dan mendoakan anak kami yang akan melaksanakan khitan.</p>
+    <p style="font-size:14px;line-height:1.6">
+      Dengan memohon rahmat dan ridho Allah SWT, kami mengundang Bapak/Ibu/Saudara/i untuk hadir dan mendoakan anak kami yang akan melaksanakan khitan.
+    </p>
   </div>
 
   <div class="section">
@@ -105,7 +108,9 @@ footer{margin-top:24px;font-size:12px;opacity:.85}
 
   <div class="section">
     <h3>🤲 Doa Khitan</h3>
-    <p style="font-size:14px;line-height:1.6">Ya Allah, jadikanlah anak kami anak yang sholeh, sehat, dan berbakti. Aamiin.</p>
+    <p style="font-size:14px;line-height:1.6">
+      Ya Allah, jadikanlah anak kami anak yang sholeh, sehat, dan berbakti. Aamiin.
+    </p>
   </div>
 
   <div class="section">
@@ -117,11 +122,6 @@ footer{margin-top:24px;font-size:12px;opacity:.85}
   <div class="section">
     <h3>🎁 Kirim Kado</h3>
     <p style="font-size:14px">📦 Alamat Rumah<br>💳 DANA 08xxxx a.n. Orang Tua</p>
-  </div>
-
-  <div class="section">
-    <h3>🔊 Backsound</h3>
-    <button class="btn" id="musicBtn" onclick="toggleMusic()">▶ Play Musik</button>
   </div>
 
   <footer>Terima kasih atas doa & kehadirannya 🤍</footer>
@@ -139,12 +139,18 @@ const guestName = guest ? guest.replace(/\+/g,' ') : 'Tamu Undangan';
 document.getElementById('popupGuestName').innerText = guestName;
 document.getElementById('guestName').innerText = guestName;
 
+/* ===== BUKA UNDANGAN + MAINKAN MUSIK OTOMATIS ===== */
 function enterInvitation(){
   document.getElementById('popup').style.display = 'none';
   document.getElementById('invitationCard').style.display = 'block';
+
+  const music = document.getElementById('music');
+  music.play().catch(e=>{
+    console.log("Autoplay diblokir, klik tombol musik untuk memulai");
+  });
 }
 
-/* ===== SLIDER FOTO + SWIPE ===== */
+/* ===== SLIDER FOTO ===== */
 let index = 0;
 const slides = document.querySelectorAll('.slide');
 const dotsContainer = document.getElementById('dots');
@@ -179,14 +185,6 @@ slider.addEventListener('touchend',e=>{
 });
 
 setInterval(next,4000);
-
-/* ===== MUSIC ===== */
-const music = document.getElementById('music');
-const btn = document.getElementById('musicBtn');
-function toggleMusic(){
-  if(music.paused){ music.play(); btn.innerText='⏸ Pause Musik'; }
-  else { music.pause(); btn.innerText='▶ Play Musik'; }
-}
 
 /* ===== COUNTDOWN ===== */
 const eventDate = new Date('2026-01-25T09:00:00').getTime();
