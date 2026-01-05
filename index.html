@@ -77,9 +77,12 @@ footer{margin-top:24px;font-size:12px;opacity:.85}
 
 <div class="card" id="invitationCard">
   <div class="guest"><strong id="guestName">Tamu Undangan</strong></div>
+
   <h2>Assalamu’alaikum warahmatullahi wabarakatuh</h2>
-    <p style="font-size:14px;line-height:1.6">
-      Dengan memohon rahmat dan ridho Allah SWT, kami mengundang Bapak/Ibu/Saudara/i untuk hadir dan mendoakan putra kami    </p></h2>
+  <p style="font-size:14px;line-height:1.6">
+    Dengan memohon rahmat dan ridho Allah SWT, kami mengundang Bapak/Ibu/Saudara/i untuk hadir dan mendoakan putra kami:
+  </p>
+
   <h1>Achmad Ismail</h1>
 
   <!-- SLIDER FOTO 3:4 -->
@@ -87,20 +90,22 @@ footer{margin-top:24px;font-size:12px;opacity:.85}
     <img src="khitan/foto1.jpg" class="slide active">
     <img src="khitan/foto2.jpg" class="slide">
     <img src="khitan/foto3.jpg" class="slide">
+    <img src="khitan/foto4.jpg" class="slide">
     <img src="khitan/foto5.jpg" class="slide">
     <div class="dots" id="dots"></div>
   </div>
 
   <div class="section">
- <p style="font-size:14px;line-height:1.6">
-      yang insya Allah dilaksanakan pada    </p></h2>
+    <p style="font-size:14px;line-height:1.6">
+      yang insya Allah dilaksanakan pada:
+    </p>
   </div>
 
   <div class="section">
     <h3>📅 Detail Acara</h3>
     <p>Minggu, 25 Januari 2026<br>Pukul 09.00 WIB<br>Jakarta Utara</p>
     <p id="countdown">⏳ Menghitung waktu...</p>
-    <p>Hhiburan Orkes Dangdut</p>
+    <p>Hiburan: Orkes Dangdut</p>
     <a href="https://www.google.com/maps/place/Kost+Danis/@-6.1280686,106.8743555,47m" target="_blank">
       <button class="btn btn-gold">📍 Buka Google Maps</button>
     </a>
@@ -124,7 +129,7 @@ footer{margin-top:24px;font-size:12px;opacity:.85}
     <p style="font-size:14px">📦 Alamat Rumah<br>💳 DANA 08xxxx a.n. Orang Tua</p>
   </div>
 
-  <footer>Terima kasih atas doa & kehadirannya 🤍</footer>
+  <footer>Terima kasih atas doa & kehadirannya 🤍 wassalammualaikum wr wb</footer>
 </div>
 
 <audio id="music" loop>
@@ -143,9 +148,7 @@ document.getElementById('guestName').innerText = guestName;
 function enterInvitation(){
   document.getElementById('popup').style.display = 'none';
   document.getElementById('invitationCard').style.display = 'block';
-
-  const music = document.getElementById('music');
-  music.play().catch(e=>{
+  document.getElementById('music').play().catch(e=>{
     console.log("Autoplay diblokir, klik tombol musik untuk memulai");
   });
 }
