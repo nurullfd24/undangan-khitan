@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Pratinjau Undangan Khitan</title>
+  <title>Undangan Khitan Achmad Ismail</title>
   <style>
     * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
     body {
@@ -12,14 +12,23 @@
       display: flex; justify-content: center; align-items: center; color: #fff;
       overflow: hidden;
     }
+
     .card {
       max-width: 420px; width: 100%;
       background: rgba(255,255,255,0.12);
       backdrop-filter: blur(6px);
       border-radius: 20px; padding: 24px; text-align: center;
-      display: none; /* awal disembunyikan, muncul setelah pop-up */
+      display: none; 
+      animation: fadeInCard 0.8s ease forwards;
     }
-    h1{font-size:26px;margin:8px 0} h2{font-size:20px;margin:8px 0}
+
+    @keyframes fadeInCard{
+      from{opacity:0; transform:translateY(30px);}
+      to{opacity:1; transform:translateY(0);}
+    }
+
+    h1{font-size:26px;margin:8px 0} 
+    h2{font-size:20px;margin:8px 0}
     .guest{margin:10px 0;font-size:16px}
 
     /* Slider 3:4 */
@@ -47,11 +56,18 @@
       background: rgba(0,0,0,0.7);
       display:flex; justify-content:center; align-items:center;
       z-index:1000;
+      opacity:0;
+      animation: fadeIn 0.6s forwards;
     }
+    @keyframes fadeIn { to{opacity:1;} }
+
     #popupContent {
       background:#fff; color:#000; padding:20px; border-radius:16px; text-align:center; max-width:320px;
     }
-    #popupContent button {margin-top:12px; padding:10px 16px; border:none; border-radius:10px; background:#b22222; color:#fff; font-size:16px; cursor:pointer;}
+    #popupContent button {
+      margin-top:12px; padding:10px 16px; border:none; border-radius:10px;
+      background:#b22222; color:#fff; font-size:16px; cursor:pointer;
+    }
   </style>
 </head>
 <body>
@@ -65,26 +81,56 @@
     </div>
   </div>
 
+  <!-- CARD UNDANGAN -->
   <div class="card" id="invitationCard">
     <h2>Undangan Khitan</h2>
     <h1>Achmad Ismail</h1>
+
+    <!-- SLIDER FOTO -->
     <div class="slider" id="slider">
       <img src="khitan/foto1.jpg" class="slide active">
       <img src="khitan/foto2.jpg" class="slide">
       <img src="khitan/foto3.jpg" class="slide">
       <img src="khitan/foto4.jpg" class="slide">
-      <img src="khitan/foto5.jpg" class="slide">
       <div class="dots" id="dots"></div>
     </div>
-    <!-- Konten lainnya tetap sama -->
+
+    <!-- DETAIL ACARA -->
     <div class="section">
       <h3>📅 Detail Acara</h3>
       <p>Minggu, 25 Januari 2026<br>Pukul 09.00 WIB<br>Jakarta Utara</p>
       <p id="countdown">⏳ Menghitung waktu...</p>
-      <a href="https://www.google.com/maps/place/Kost+Danis/@-6.1280686,106.8743555,47m/data=!3m1!1e3!4m6!3m5!1s0x2e6a1fd0c46840ad:0x37cf8541e4b83484!8m2!3d-6.1279646!4d106.8748049!16s%2Fg%2F11hbl2p_f5?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D" target="_blank" style="text-decoration:none">
+      <a href="https://goo.gl/maps/..." target="_blank" style="text-decoration:none">
         <button class="btn btn-gold">📍 Buka Google Maps</button>
       </a>
     </div>
+
+    <!-- DOA KHITAN -->
+    <div class="section">
+      <h3>🤲 Doa Khitan</h3>
+      <p style="font-size:14px;line-height:1.6">Ya Allah, jadikanlah anak kami anak yang sholeh, sehat, dan berbakti. Aamiin.</p>
+    </div>
+
+    <!-- KONFIRMASI HADIR -->
+    <div class="section">
+      <h3>✅ Konfirmasi Kehadiran</h3>
+      <button class="btn btn-green">Hadir</button>
+      <button class="btn btn-red">Tidak Hadir</button>
+    </div>
+
+    <!-- KIRIM KADO -->
+    <div class="section">
+      <h3>🎁 Kirim Kado</h3>
+      <p style="font-size:14px">📦 Alamat Rumah<br>💳 DANA 08xxxx a.n. Orang Tua</p>
+    </div>
+
+    <!-- BACKSOUND -->
+    <div class="section">
+      <h3>🔊 Backsound</h3>
+      <button class="btn" id="musicBtn" onclick="toggleMusic()">▶ Play Musik</button>
+    </div>
+
+    <footer>Terima kasih atas doa & kehadirannya 🤍</footer>
   </div>
 
 <audio id="music" loop>
@@ -98,12 +144,18 @@
   const guestName = guest ? guest.replace(/\+/g,' ') : 'Tamu Undangan';
   document.getElementById('popupGuestName').innerText = guestName;
 
+  // ===== POP-UP MASUK & FADE =====
   function enterInvitation(){
-    document.getElementById('popup').style.display = 'none';
-    document.getElementById('invitationCard').style.display = 'block';
+    const popup = document.getElementById('popup');
+    const card = document.getElementById('invitationCard');
+    popup.style.opacity = 0;
+    setTimeout(()=>{
+      popup.style.display='none';
+      card.style.display='block';
+    },500);
   }
 
-  // ===== SLIDER FOTO + SWIPE =====
+  // ===== SLIDER FOTO + SWIPE + DOT =====
   let index = 0;
   const slides = document.querySelectorAll('.slide');
   const dotsContainer = document.getElementById('dots');
@@ -137,7 +189,6 @@
     if(startX - endX > 50) next();
     if(endX - startX > 50) prev();
   });
-
   setInterval(next,4000);
 
   // ===== MUSIC =====
